@@ -141,13 +141,15 @@ PENDING_CLONE                  PEND_PDB3200003      SEED_PDB32
 CLONE_FROM_SEED                PDB3100001           SEED_PDB31           => we took a preclone and converted it to a clone
 ```
 
-Note that there are many many options in terms of cloning for pluggable databases. This package goes with the Keep-It-Simple policy. It is going to clone pluggables by
+Notes
+
+1) There are many many options in terms of cloning for pluggable databases. This package goes with the Keep-It-Simple policy. It is going to clone pluggables by
 
 - making the source read only
 - cloning the datafiles replacing existing pluggable name with a new one
 
-As you'd expect, this software comes WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+2) As you'd expect, this software comes WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Don't forget - you're messing with pluggable databases here. Don't be THAT person that drops all your data!
+3) Don't forget - you're messing with pluggable databases here. Don't be THAT person that drops all your data!
 
-
+4) Notice when a pending pluggable becomes owned by a developer, the files are not being moved or renamed. This is done to keep the operation nice and snappy.

@@ -1,3 +1,7 @@
+--
+-- Just some junk testing here. Nothing of interest
+--
+--
 alter pluggable database pdb1 close immediate;
 alter pluggable database pdb1 open read only;
 create pluggable database seed_dev1 from pdb1

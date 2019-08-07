@@ -1,4 +1,4 @@
-"# plugzilla" 
+# plugzilla
 
 Cloning a pluggable database takes time, and for environments where you'd like to use clones as part of unit testing, or other elements of Agile development, it would be nice to be able to bring a clone into operation in the smallest time possible. One mechanism for that is sparse storage clones aka snapshot copy, but depending on your version and your storage infrastructure, you might hit some limitations. So this package allows you clone pluggable databases extremely quickly by having pluggable database pre-cloned in advance.
 

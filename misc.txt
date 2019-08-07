@@ -1,0 +1,62 @@
+alter pluggable database pdb1 close immediate;
+alter pluggable database pdb1 open read only;
+create pluggable database seed_dev1 from pdb1
+    file_name_convert=('X:\ORACLE\ORADATA\DB19\PDB1\','X:\ORACLE\ORADATA\DB19\seed_dev1\');
+alter pluggable database pdb1 close;
+alter pluggable database pdb1 open;
+
+alter pluggable database seed_dev1 open;
+alter pluggable database seed_dev1 close immediate;
+alter pluggable database seed_dev1 open read only;
+
+alter pluggable database seed_dev1 close immediate;
+drop pluggable database seed_dev1 including datafiles;
+
+create pluggable database pdb2 from pdb1
+    file_name_convert=('X:\ORACLE\ORADATA\DB19\PDB1\','X:\ORACLE\ORADATA\DB19\pdb2\');
+
+alter pluggable database pdb2 close;
+
+
+col parent format a20
+col child format a20
+select * from plugzilla_meta;
+
+
+
+
+set serverout on
+
+exec plugzilla.new_seed_from_existing(p_source=>'PDB1',p_seed=>'SEED_P1A');
+exec plugzilla.new_seed_from_existing(p_source=>'PDB1',p_seed=>'SEED_P1B');
+
+
+exec plugzilla.clone_from_seed('P1A','MYDB')
+exec plugzilla.clone_from_seed('P1B','MYDB2')
+exec plugzilla.clone_from_seed('P1B')
+
+exec plugzilla.preclone;
+
+exec plugzilla.new_seed_from_existing(p_source=>'pdb1',p_seed=>'SEED_P1A');
+exec plugzilla.new_seed_from_existing(p_source=>'pdb1',p_seed=>'SEED_P1B');
+
+exec plugzilla.new_seed_from_existing(p_source=>'pdb1',p_seed=>'P1C');
+
+exec plugzilla.drop_clone('MYDB2')
+exec plugzilla.drop_clone('MYDB')
+exec plugzilla.drop_clone('PEND_P1B001')
+
+exec plugzilla.drop_clone('P1B003')
+
+exec plugzilla.drop_clone('SEED_P1A')
+
+exec plugzilla.drop_seed('SEED_P1A')
+
+exec plugzilla.drop_clone('PDB1')
+
+exec plugzilla.new_seed_from_existing(p_source=>'SEED_P1A',p_seed=>'SEED_ZZZ');
+
+exec plugzilla.drop_seed('P1B')
+
+exec plugzilla.drop_all_clones('P1A');
+exec plugzilla.drop_all_clones('P1B');

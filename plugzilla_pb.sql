@@ -27,11 +27,18 @@ begin
   execute immediate m;
 end;
 
+procedure set_root is
+begin
+  if sys_context('USERENV','CON_NAME') != 'CDB$ROOT' then 
+    ddl('alter session set container = cdb$root');
+  end if;
+end;  
+
 procedure serialise_usage is
   l_lock_handle     varchar2(128);
   l_lock_status     number;
 begin
-  ddl('alter session set container = cdb$root');
+  set_root;
   dbms_lock.allocate_unique (
      'PLUGZILLA',
      l_lock_handle);
@@ -51,7 +58,7 @@ procedure release_usage(p_from_die boolean default false) is
   l_lock_handle     varchar2(128);
   l_lock_status     number;
 begin
-  ddl('alter session set container = cdb$root');
+  set_root;
   dbms_lock.allocate_unique (
      'PLUGZILLA',
      l_lock_handle);
@@ -265,7 +272,7 @@ begin
   ddl('alter pluggable database '||l_clone||' close immediate');
   ddl('alter pluggable database '||l_clone||' open');
 
-  ddl('alter session set container = cdb$root');
+  set_root;
   
   update plugzilla_meta
   set    relationship = g_clone_from_seed,
@@ -402,7 +409,7 @@ begin
 
       for j in l_pend_hwm+1 .. ( l_pend_hwm + g_reserve_copies - l_pending )
       loop
-        l_pend_pdb := g_pend_prefix||substr(i.child,length(g_seed_prefix)+1)||to_char(j,'fm000');
+        l_pend_pdb := g_pend_prefix||substr(i.child,length(g_seed_prefix)+1)||to_char(j,'fm00000');
         
         ddl('create pluggable database '||l_pend_pdb||' from '||i.child||' '||
                           'file_name_convert=('''||i.child||''','''||l_pend_pdb||''')');

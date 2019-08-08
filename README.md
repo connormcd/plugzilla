@@ -49,7 +49,7 @@ alter session set container = cdb$root
 PL/SQL procedure successfully completed.
 ```
 
-So now we have two seed copies of PDB1 at different points in time. These are 
+So now we have two seed copies of PDB1 at different points in time. These are the pluggables that are the base for any developer to clone from.  
 
 3) We now call plugzilla.preclone (although more likely is that you would have this as a scheduler job).  This will look for any seeds (we have 2 from above) and pre-create 'n' pluggable copies of those databases where 'n is defined by the package constant 'g_reserve_copies'
 
@@ -123,7 +123,7 @@ alter session set container = cdb$root
 PL/SQL procedure successfully completed.
 ```
 
-Note that this does not "return" the pluggable to the pool of available pluggables, because that database could contain changes which means it will have diverged from its initial seed. It is completely dropped and the space freed up. It is 'preclone' alone that keeps a preallocation of pluggables available. Because the numeric suffix continues to rise, there is a cap of 99999 pluggables that could be created. If you're application is not deployed by then, you've got bigger issues to worry about :-)
+Note that this does not "return" the pluggable to the pool of available pluggables, because that database could contain changes which means it will have diverged from its initial seed. It is completely dropped and the space freed up. It is 'preclone' alone that keeps a preallocation of pluggables available. Because the numeric suffix continues to rise, there is a cap of 99999 pluggables that could be created. If your application is not deployed by then, you've got bigger issues to worry about :-)
 
 At any time, the table contains the state of plugzilla. After the above operations, it would look like this:
 

@@ -153,3 +153,17 @@ Notes
 3) Don't forget - you're messing with pluggable databases here. Don't be THAT person that drops all your data!
 
 4) Notice when a pending pluggable becomes owned by a developer, the files are not being moved or renamed. This is done to keep the operation nice and snappy.
+
+# LICENSE
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+      http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
